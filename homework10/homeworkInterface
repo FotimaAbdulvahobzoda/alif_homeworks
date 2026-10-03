@@ -1,0 +1,209 @@
+package main
+
+import (
+	"fmt"
+	"math"
+)
+
+var n any = "Hello"
+
+type (
+	Vehicle interface {
+		Start() string //task 1
+		Stop() string
+	}
+
+	Shape interface {
+		Area() float64 //task2
+		Perimeter() float64
+	}
+
+	Employee interface {
+		Salary() float64 //task3
+		Position() string
+	}
+
+	Instrument interface { //task4
+		Play() string
+	}
+
+	Warrior interface {
+		Attack() int //task5
+		Description() string
+	}
+
+	Transport interface {
+		Price(distanceKm float64) float64 //task6
+	}
+
+	Discount interface {
+		Apply(price float64) float64 //task7
+	}
+)
+
+type (
+	Car struct{ Name string } //task1
+
+	Bike struct{ Name string }
+
+	Bus struct{ Name string }
+
+	Circle struct{ Radius float64 } //task2
+
+	Rectangle struct {
+		Height float64
+		Width  float64
+	}
+
+	Triangle struct {
+		A float64
+		B float64
+		C float64
+	}
+
+	Manager struct { //task3
+		Name       string
+		Basesalary float64
+	}
+
+	Developer struct {
+		Name       string
+		Basesalary float64
+		Level      string
+	}
+
+	Guitar struct{ Name string } //task4
+
+	Piano struct{ Name string }
+
+	Drum struct{ Name string }
+
+	Knight struct { //task5
+		Name     string
+		Strength int
+	}
+
+	Archer struct {
+		Name      string
+		Precision int
+	}
+
+	Mage struct {
+		Name      string
+		Manapower int
+	}
+
+	Taxi struct { //task6
+		FixedKm    float64
+		PricePerKm float64
+	}
+
+	Bus1 struct{ Price1 float64 }
+
+	Bike1 struct{ PricePerKm float64 }
+
+	PercentDiscound struct{ Percent float64 } //task7
+	FixedDiscound   struct{ Amount float64 }
+	NoDiscount      struct{}
+
+	Point struct{ X, Y int } // task 8
+
+	Book struct{ Value any } //task9
+)
+
+func (c Car) Start() string { return fmt.Sprintf("Car %v is strarting", c.Name) } //task1
+func (c Car) Stop() string  { return fmt.Sprintf("Car %v stops", c.Name) }
+
+func (b Bike) Start() string { return fmt.Sprintf("Bike %v is strarting", b.Name) }
+func (b Bike) Stop() string  { return fmt.Sprintf("Bike %v stops", b.Name) }
+
+func (b Bus) Start() string { return fmt.Sprintf("Bus %v is strarting", b.Name) }
+func (b Bus) Stop() string  { return fmt.Sprintf("Bus %v stops", b.Name) }
+
+func (c Circle) Area() float64      { return math.Pi * c.Radius * c.Radius } //task2
+func (c Circle) Perimeter() float64 { return 2 * math.Pi * c.Radius }
+
+func (r Rectangle) Area() float64      { return r.Width * r.Height }
+func (r Rectangle) Perimeter() float64 { return 2 * (r.Width + r.Height) }
+
+func (t Triangle) Area() float64 {
+	s := (t.A + t.B + t.C) / 2.0
+	return math.Sqrt(s * (s - t.A) * (s - t.B) * (s - t.C))
+}
+func (t Triangle) Perimeter() float64 { return t.A + t.B + t.C }
+
+func (m Manager) Salary() float64 { return m.Basesalary * 1.20 } //task3
+
+func (d Developer) Salary() float64 {
+	if d.Level == "senior" {
+		return d.Basesalary * 1.30
+	}
+	return d.Basesalary
+}
+
+func (g Guitar) Play() string { return fmt.Sprintln("Guitar" + g.Name + "plays: chika-chika") } //task4
+
+func (p Piano) Play() string { return fmt.Sprintln("Piano" + p.Name + "plays: clunk-clink") }
+
+func (d Drum) Play() string { return fmt.Sprintln("Drum" + d.Name + "plays: boom-boom") }
+
+func (k Knight) Attack() int { return k.Strength * 2 } //task5
+func (k Knight) Description() string {
+	return fmt.Sprintf("%v's strength is %v. He attacks equal to %v", k.Name, k.Strength, k.Attack())
+}
+
+func (a Archer) Attack() int { return a.Precision + 10 }
+func (a Archer) Description() string {
+	return fmt.Sprintf("%v's precision is %v. He attacks equal to %v", a.Name, a.Precision, a.Attack())
+}
+
+func (m Mage) Attack() int { return m.Manapower * 3 }
+func (m Mage) Description() string {
+	return fmt.Sprintf("%v's mana is %v. His mana is powered equal to %v", m.Name, m.Manapower, m.Attack())
+}
+
+func (t Taxi) Price(distanceKm float64) float64 { return t.FixedKm + distanceKm*t.PricePerKm } //task6
+
+func (b Bus1) Price(distanceKm float64) float64 { return b.Price1 }
+
+func (b Bike1) Price(distanceKm float64) float64 { return distanceKm * b.PricePerKm }
+
+func (p PercentDiscound) Apply(price float64) float64 { //task7
+	return price - price*p.Percent/100
+}
+
+func (f FixedDiscound) Apply(price float64) float64 {
+	return price - f.Amount
+}
+
+func (n NoDiscount) Apply(price float64) float64 { return price }
+
+func Describe(v any) { //task8
+	fmt.Printf("Variable: %v, type: %T", v, v)
+}
+
+func AsString(v any) (string, bool) { //task10
+	if v, ok := n.(string); ok {
+		return v, true
+	}
+	return "", false
+}
+
+func main() {
+	fmt.Println("====== First task ======")
+	vehicles := []Vehicle{
+		Car{"Toyota"},
+		Car{"Volfsvagen"},
+		Bike{"Giant"},
+		Bike{"Trek"},
+		Bus{"Yutong"},
+		Bus{"Daimer"},
+	}
+
+	for _, vehicle := range vehicles {
+		vehicle.Start()
+		vehicle.Stop()
+
+	}
+
+}
