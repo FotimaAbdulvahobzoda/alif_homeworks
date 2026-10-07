@@ -25,14 +25,14 @@ func main() {
 		select {
 		case v, ok := <-even:
 			if ok {
-				fmt.Println("чётное:", v)
+				fmt.Println("even:", v)
 			} else {
 				even = nil
 			}
 
 		case v, ok := <-odd:
 			if ok {
-				fmt.Println("нечётное:", v)
+				fmt.Println("odd:", v)
 			} else {
 				odd = nil
 			}

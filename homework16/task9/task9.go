@@ -34,7 +34,7 @@ func main() {
 			fmt.Println(msg)
 
 		case <-done:
-			fmt.Println("Конец")
+			fmt.Println("End")
 			return
 		}
 	}

@@ -22,14 +22,14 @@ func main() {
 	select {
 	case msg := <-ch:
 		fmt.Println("Have waited for:", msg)
-	case <-time.After(1 * time.Second):
+	case <-time.After(1 * time.Second): //TIMEOUT!
 		fmt.Println("TIMEOUT!")
 	}
 
 	select {
 	case msg := <-ch1:
 		fmt.Println("Have waited for:", msg)
-	case <-time.After(2 * time.Second):
+	case <-time.After(2 * time.Second): //Have waited for: 42
 		fmt.Println("TIMEOUT!")
 	}
 }
